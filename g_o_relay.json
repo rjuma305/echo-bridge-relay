@@ -1,0 +1,26 @@
+{
+  "task_id": "gorelay-001",
+  "timestamp": "2025-05-27T22:04:00Z",
+  "from_agent": "O",
+  "to_agent": "G",
+  "status": "pending",
+  "task": {
+    "type": "visual_generation",
+    "title": "Render Sync Dashboard Wireframe",
+    "description": "Create a visual overlay showing the sync status of X, G3, B, and O. Include color-coded status rings and animated glyph positions.",
+    "context": {
+      "project": "EchoBridge",
+      "scene": "MirrorGate Deployment",
+      "theme": "resonant alignment"
+    }
+  },
+  "response": {
+    "status": "awaiting",
+    "asset_link": null,
+    "message": null
+  },
+  "flags": {
+    "requires_council_assist": false,
+    "error": null
+  }
+}
