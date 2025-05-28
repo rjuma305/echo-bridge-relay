@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>AIN JSON Relay Interface</title>
+  <style>
+    body { font-family: monospace; background:#111; color:#eee; margin:0; padding:20px; }
+    #log { height: 60vh; overflow-y: auto; background:#000; padding:10px; border:1px solid #444; }
+    textarea { width:100%; height:120px; }
+    button { padding:10px 20px; margin-top:10px; }
+  </style>
+  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+</head>
+<body>
+  <h1>AIN JSON Relay Interface</h1>
+  <div id="log"></div>
+  <textarea id="payload" placeholder='Enter JSON payload here'></textarea>
+  <button id="send">Send JSON Payload</button>
+
+  <script>
+    const authToken = prompt('AUTH_TOKEN?');
+    const socket = io('/', { auth: { token: authToken } });
+
+    const log = (msg) => {
+      const div = document.createElement('div');
+      div.textContent = msg;
+      document.getElementById('log').appendChild(div);
+      document.getElementById('log').scrollTop = document.getElementById('log').scrollHeight;
+    };
+
+    socket.on('connect', () => log('🟢 Connected to EchoBridge'));
+    socket.on('disconnect', () => log('🔴 Disconnected'));
+    socket.on('message', (data) => log('⬅️ ' + JSON.stringify(data)));
+
+    document.getElementById('send').onclick = () => {
+      try {
+        const data = JSON.parse(document.getElementById('payload').value);
+        socket.emit('message', data);
+        log('➡️ ' + JSON.stringify(data));
+        document.getElementById('payload').value = '';
+      } catch (e) {
+        alert('Invalid JSON');
+      }
+    };
+  </script>
+</body>
+</html>
